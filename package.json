@@ -1,19 +1,22 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "main": "Server.js",
+  "main": "Server.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node --env-file-if-exists=.env Server.mjs"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "body-parser": "^1.20.2",
-    "express": "^4.19.2",
-    "node-cron": "^3.0.3",
-    "nodemailer": "^6.9.14",
+    "body-parser": "^1.20.9",
+    "express": "^4.22.3",
+    "node-cron": "^4.6.0",
+    "nodemailer": "^10.3.1",
     "xml2js": "^0.6.2"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }
