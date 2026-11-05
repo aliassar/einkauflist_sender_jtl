@@ -4,7 +4,7 @@ import cron from 'node-cron';
 import nodemailer from 'nodemailer';
 
 const app = express();
-const port = 3000;
+const port = Number(process.env.PORT ?? 3000);
 
 let articles = [];
 
@@ -23,12 +23,12 @@ app.post('*', (req, res) => {
 
 // Setup nodemailer transporter
 const transporter = nodemailer.createTransport({
-    host: 'smtp.ionos.de',
-    port: 465,
-    secure: true, // true for 465, false for other ports
+    host: process.env.SMTP_HOST,
+    port: Number(process.env.SMTP_PORT ?? 465),
+    secure: (process.env.SMTP_PORT ?? '465') === '465', // true for 465, false for other ports
     auth: {
-        user: 'your-mailbox@example.com',
-        pass: 'YOUR_SMTP_PASSWORD'
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS
     }
 });
 
@@ -51,8 +51,8 @@ const sendEmail = () => {
     const currentDate = new Date().toLocaleDateString('de-DE');
 
     const mailOptions = {
-        from: 'your-mailbox@example.com',
-        to: 'your-mailbox@example.com',
+        from: process.env.SMTP_USER,
+        to: process.env.MAIL_TO ?? process.env.SMTP_USER,
         subject: `Summary for ${currentDate}: ${uniqueArticleCount} unique articles`,
         text: emailContent
     };
